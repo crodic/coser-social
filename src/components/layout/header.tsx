@@ -4,18 +4,29 @@ import SearchInput from "../search-input";
 import { Bell, FileText, Home, MessageSquare, Users, Video } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import SearchButton from "./search-button";
+import { Dancing_Script } from "next/font/google";
+import { cn } from "@/lib/utils";
+
+const dancingScript = Dancing_Script({
+  weight: ["700"],
+  display: "swap",
+  variable: "--font-dancing-script",
+});
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-30 border-b border-gray-200 bg-white">
+    <header className={cn("sticky top-0 z-30 border-b border-gray-200 bg-white", dancingScript.variable)}>
       <div className="flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
           {/* Mobile Menu Button */}
           <MobileMenu />
 
-          <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500 font-bold text-white">
-            S
+          <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500 font-[family-name:var(--font-dancing-script)] text-2xl font-bold text-white md:hidden">
+            C
           </div>
+          <p className="mr-4 hidden font-[family-name:var(--font-dancing-script)] text-4xl font-bold text-blue-500 md:block">
+            Cosper
+          </p>
           <SearchInput className="hidden w-64 md:block" />
           <SearchButton />
         </div>

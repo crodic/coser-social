@@ -3,8 +3,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Heart, MessageCircle, Share2, MoreHorizontal, ImageIcon, Smile, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { ImageGrid } from "./image-grid";
+// import { ImageGrid } from "./image-grid";
 import PostActionButton from "./post-action";
+import { PostGrid } from "./post-grid";
 
 interface PostProps {
   user: {
@@ -13,7 +14,7 @@ interface PostProps {
     status?: string;
   };
   content: string;
-  images: string[];
+  medias: { type: "image" | "video"; src: string }[];
   reactions: {
     count: number;
     avatars: string[];
@@ -22,7 +23,7 @@ interface PostProps {
   shares: number;
 }
 
-export function Post({ user, content, images, reactions, comments, shares }: PostProps) {
+export function Post({ user, content, medias, reactions, comments, shares }: PostProps) {
   return (
     <div className="mb-4 rounded-lg bg-white shadow">
       <div className="p-4">
@@ -47,9 +48,9 @@ export function Post({ user, content, images, reactions, comments, shares }: Pos
         </div>
       </div>
 
-      {images.length > 0 && (
+      {medias.length > 0 && (
         <div className="w-full">
-          <ImageGrid images={images} />
+          <PostGrid paths={medias} />
         </div>
       )}
 
@@ -81,7 +82,7 @@ export function Post({ user, content, images, reactions, comments, shares }: Pos
 
         <div className="mt-3 flex items-center space-x-2">
           <Avatar className="h-8 w-8">
-            <AvatarImage src="/placeholder.svg?height=32&width=32" alt="Profile" />
+            <AvatarImage src="/avatar.jpg" alt="Profile" />
             <AvatarFallback className="bg-blue-500 text-white">U</AvatarFallback>
           </Avatar>
           <div className="relative flex-1">

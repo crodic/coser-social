@@ -13,7 +13,7 @@ const cosplayers = [
   {
     id: 1,
     name: "AkiraKosplay",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/avatar.jpg",
     points: 12450,
     followers: 45.2,
     rank: 1,
@@ -24,7 +24,7 @@ const cosplayers = [
   {
     id: 2,
     name: "CosplayQueen",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/avatar.jpg",
     points: 10890,
     followers: 38.7,
     rank: 2,
@@ -35,7 +35,7 @@ const cosplayers = [
   {
     id: 3,
     name: "MangaMaster",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/avatar.jpg",
     points: 9750,
     followers: 32.1,
     rank: 3,
@@ -46,7 +46,7 @@ const cosplayers = [
   {
     id: 4,
     name: "AnimeArtist",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/avatar.jpg",
     points: 8640,
     followers: 29.8,
     rank: 4,
@@ -57,7 +57,7 @@ const cosplayers = [
   {
     id: 5,
     name: "CosplayKing",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/avatar.jpg",
     points: 7920,
     followers: 25.3,
     rank: 5,
@@ -68,7 +68,7 @@ const cosplayers = [
   {
     id: 6,
     name: "OtakuPrincess",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/avatar.jpg",
     points: 6840,
     followers: 21.9,
     rank: 6,
@@ -79,7 +79,7 @@ const cosplayers = [
   {
     id: 7,
     name: "CosplayNinja",
-    avatar: "/placeholder.svg?height=40&width=40",
+    avatar: "/avatar.jpg",
     points: 5730,
     followers: 18.4,
     rank: 7,
@@ -131,9 +131,11 @@ export default function Leaderboard() {
             >
               <div className="flex items-center gap-3">
                 <div className="bg-muted relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
-                  <span className="bg-primary text-primary-foreground absolute -top-1 -left-1 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold">
-                    {cosplayer.rank}
-                  </span>
+                  {cosplayer.rank <= 3 && (
+                    <span className="bg-primary text-primary-foreground absolute -top-1 -left-1 z-10 flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold">
+                      {cosplayer.rank}
+                    </span>
+                  )}
                   <Avatar className="h-8 w-8">
                     <AvatarImage src={cosplayer.avatar} alt={cosplayer.name} />
                     <AvatarFallback>{cosplayer.name.substring(0, 2)}</AvatarFallback>

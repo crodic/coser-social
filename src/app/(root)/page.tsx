@@ -36,7 +36,7 @@ export default function Page() {
               key={post.id}
               user={post.user}
               content={post.content}
-              images={post.images}
+              medias={post.medias}
               reactions={post.reactions}
               comments={post.comments}
               shares={post.shares}

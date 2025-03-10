@@ -70,10 +70,6 @@ export function ImageGrid({ images, maxDisplay = 4 }: ImageGridProps) {
   // 5 or more images
   return (
     <div className="grid grid-cols-6 gap-1 overflow-hidden rounded-lg">
-      {/* First two larger images */}
-      {/* <div className="col-span-6 aspect-video">
-        <img src={images[0] || "/placeholder.svg"} alt="Post content 1" className="h-full w-full object-cover" />
-      </div> */}
       <div className="col-span-6 aspect-video">
         <img src={images[1] || "/placeholder.svg"} alt="Post content 2" className="h-full w-full object-cover" />
       </div>
