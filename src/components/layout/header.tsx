@@ -1,7 +1,7 @@
 import React from "react";
 import { MobileMenu } from "./mobile-menu";
 import SearchInput from "../search-input";
-import { FileText, Home, MessageSquare, Search, Users, Video } from "lucide-react";
+import { Bell, FileText, Home, MessageSquare, Users, Video } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import SearchButton from "./search-button";
 
@@ -29,7 +29,7 @@ export default function Header() {
 
         <div className="flex items-center space-x-3">
           <IconBadge icon={<MessageSquare size={20} />} count={2} />
-          <IconBadge icon={<Search />} count={10} />
+          <IconBadge icon={<Bell />} count={10} />
           <Avatar className="size-10 cursor-pointer">
             <AvatarImage src="/image.png" alt="Profile" />
             <AvatarFallback className="bg-orange-500 text-white">LM</AvatarFallback>
