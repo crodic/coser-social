@@ -110,7 +110,7 @@ export default function ProfilePage() {
                       comments={post.comments}
                       shares={post.shares}
                       content={post.content}
-                      images={post.images}
+                      medias={post.medias}
                       reactions={post.reactions}
                       user={post.user}
                     />

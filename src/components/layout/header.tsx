@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 
 const dancingScript = Dancing_Script({
   weight: ["700"],
+  subsets: ["latin"],
   display: "swap",
   variable: "--font-dancing-script",
 });
