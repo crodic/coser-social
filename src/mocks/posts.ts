@@ -17,6 +17,23 @@ interface PostType {
 
 export const posts: PostType[] = [
   {
+    id: 10,
+    user: {
+      name: "Lori Cortez",
+      avatar: "/image (1).png",
+      status: "Active",
+    },
+    content:
+      "I created Roughly plugin to sketch crafted hand-drawn elements which can be used to any usage (diagrams/flows/decoration/etc)",
+    medias: [],
+    reactions: {
+      count: 8,
+      avatars: ["/image (1).png", "/image (5).png", "/image (3).png"],
+    },
+    comments: 4,
+    shares: 1,
+  },
+  {
     id: 1,
     user: {
       name: "Lori Cortez",
