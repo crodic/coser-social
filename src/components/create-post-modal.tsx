@@ -1,15 +1,15 @@
+"use client";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ImageIcon, Smile, Video } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
+import useModalCreatePost from "@/stores/use-root-state";
 
-interface CreatePostModalProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
-
-export function CreatePostModal({ open, onOpenChange }: CreatePostModalProps) {
+export function CreatePostModal() {
+  const open = useModalCreatePost((state) => state.openCreatePost);
+  const onOpenChange = useModalCreatePost((state) => state.onOpenCreatePostChange);
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[425px]">

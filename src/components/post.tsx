@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, MessageCircle, Share2, MoreHorizontal, ImageIcon, Smile, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { ImageGrid } from "./image-grid";
+import PostActionButton from "./post-action";
 
 interface PostProps {
   user: {
@@ -100,14 +101,5 @@ export function Post({ user, content, images, reactions, comments, shares }: Pos
         </div>
       </div>
     </div>
-  );
-}
-
-function PostActionButton({ icon, label }: { icon: React.ReactNode; label: string }) {
-  return (
-    <button className="flex flex-1 items-center justify-center space-x-2 rounded-lg p-2 hover:bg-gray-100">
-      {icon}
-      <span className="text-sm text-gray-600">{label}</span>
-    </button>
   );
 }
