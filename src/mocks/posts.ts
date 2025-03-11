@@ -34,6 +34,23 @@ export const posts: PostType[] = [
     shares: 1,
   },
   {
+    id: 11,
+    user: {
+      name: "Lori Cortez",
+      avatar: "/image (1).png",
+      status: "Active",
+    },
+    content:
+      "I created Roughly plugin to sketch crafted hand-drawn elements which can be used to any usage (diagrams/flows/decoration/etc)",
+    medias: [{ type: "image", src: "/image.png" }],
+    reactions: {
+      count: 8,
+      avatars: ["/image (1).png", "/image (5).png", "/image (3).png"],
+    },
+    comments: 4,
+    shares: 1,
+  },
+  {
     id: 1,
     user: {
       name: "Lori Cortez",
@@ -45,7 +62,9 @@ export const posts: PostType[] = [
     medias: [
       { type: "image", src: "/image (1).png" },
       { type: "image", src: "/image (2).png" },
+      { type: "image", src: "/image (2).png" },
       { type: "video", src: "/video.mp4" },
+      { type: "image", src: "/image (2).png" },
     ],
     reactions: {
       count: 8,
