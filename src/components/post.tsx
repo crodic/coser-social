@@ -1,11 +1,10 @@
 import type React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Heart, MessageCircle, Share2, MoreHorizontal, ImageIcon, Smile, Send } from "lucide-react";
+import { MoreHorizontal, ImageIcon, Smile, Send } from "lucide-react";
 import { Input } from "@/components/ui/input";
-// import { ImageGrid } from "./image-grid";
-import PostActionButton from "./post-action";
 import { PostGrid } from "./post-grid";
+import PostInteractive from "./post-interactive";
 
 interface PostProps {
   user: {
@@ -74,11 +73,7 @@ export function Post({ user, content, medias, reactions, comments, shares }: Pos
           </div>
         </div>
 
-        <div className="flex border-t border-gray-200 pt-3">
-          <PostActionButton icon={<Heart size={18} />} label="Like" />
-          <PostActionButton icon={<MessageCircle size={18} />} label="Comment" />
-          <PostActionButton icon={<Share2 size={18} />} label="Share" />
-        </div>
+        <PostInteractive postId={"1"} />
 
         <div className="mt-3 flex items-center space-x-2">
           <Avatar className="h-8 w-8">

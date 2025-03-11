@@ -12,7 +12,7 @@ export default function Page() {
   return (
     <>
       <main className="flex flex-1 overflow-hidden">
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="container mx-auto flex-1 overflow-y-auto p-4">
           {/* Stories */}
           <div className="mb-4 flex space-x-2 overflow-x-auto pb-4">
             <div className="relative flex h-32 w-32 flex-shrink-0 flex-col items-center justify-center overflow-hidden rounded-lg bg-gray-200">

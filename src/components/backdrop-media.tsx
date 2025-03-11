@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -15,34 +15,34 @@ interface MediaBackdropProps {
 export function BackdropMedia({ media, initialIndex, isOpen, onClose }: MediaBackdropProps) {
   const [currentIndex, setCurrentIndex] = useState(initialIndex);
 
+  const handlePrevious = useCallback(() => {
+    setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
+  }, [media.length]);
+
+  const handleNext = useCallback(() => {
+    setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
+  }, [media.length]);
+
   useEffect(() => {
     setCurrentIndex(initialIndex);
   }, [initialIndex, isOpen]);
 
-  //   useEffect(() => {
-  //     const handleKeyDown = (e: KeyboardEvent) => {
-  //       if (!isOpen) return;
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
 
-  //       if (e.key === "Escape") {
-  //         onClose();
-  //       } else if (e.key === "ArrowLeft") {
-  //         handlePrevious();
-  //       } else if (e.key === "ArrowRight") {
-  //         handleNext();
-  //       }
-  //     };
+      if (e.key === "Escape") {
+        onClose();
+      } else if (e.key === "ArrowLeft") {
+        handlePrevious();
+      } else if (e.key === "ArrowRight") {
+        handleNext();
+      }
+    };
 
-  //     window.addEventListener("keydown", handleKeyDown);
-  //     return () => window.removeEventListener("keydown", handleKeyDown);
-  //   }, [isOpen, onClose]);
-
-  const handlePrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? media.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === media.length - 1 ? 0 : prev + 1));
-  };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrevious, isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -69,7 +69,7 @@ export function BackdropMedia({ media, initialIndex, isOpen, onClose }: MediaBac
             <video src={media[currentIndex].src} controls autoPlay className="max-h-full max-w-full object-contain" />
           ) : (
             <img
-              src={media[currentIndex].src || "/placeholder.svg"}
+              src={media[currentIndex].src}
               alt={`Media ${currentIndex + 1}`}
               className="max-h-full max-w-full object-contain"
             />

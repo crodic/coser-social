@@ -6,6 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import SearchButton from "./search-button";
 import { Dancing_Script } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { Button } from "../ui/button";
 
 const dancingScript = Dancing_Script({
   weight: ["700"],
@@ -15,12 +16,13 @@ const dancingScript = Dancing_Script({
 });
 
 export default function Header() {
+  const isLoggedIn = false;
   return (
     <header className={cn("sticky top-0 z-30 border-b border-gray-200 bg-white", dancingScript.variable)}>
       <div className="flex items-center justify-between px-4 py-2">
         <div className="flex items-center">
           {/* Mobile Menu Button */}
-          <MobileMenu />
+          {isLoggedIn && <MobileMenu />}
 
           <div className="mr-4 flex h-10 w-10 items-center justify-center rounded-lg bg-blue-500 font-[family-name:var(--font-dancing-script)] text-2xl font-bold text-white md:hidden">
             C
@@ -39,14 +41,21 @@ export default function Header() {
           <NavIcon icon={<Video size={24} />} active={false} />
         </div>
 
-        <div className="flex items-center space-x-3">
-          <IconBadge icon={<MessageSquare size={20} />} count={2} />
-          <IconBadge icon={<Bell />} count={10} />
-          <Avatar className="size-10 cursor-pointer">
-            <AvatarImage src="/image.png" alt="Profile" />
-            <AvatarFallback className="bg-orange-500 text-white">LM</AvatarFallback>
-          </Avatar>
-        </div>
+        {isLoggedIn ? (
+          <div className="flex items-center space-x-3">
+            <IconBadge icon={<MessageSquare size={20} />} count={2} />
+            <IconBadge icon={<Bell />} count={10} />
+            <Avatar className="size-10 cursor-pointer">
+              <AvatarImage src="/image.png" alt="Profile" />
+              <AvatarFallback className="bg-orange-500 text-white">LM</AvatarFallback>
+            </Avatar>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-3">
+            <Button>Đăng Nhập</Button>
+            <Button variant="outline">Đăng Ký</Button>
+          </div>
+        )}
       </div>
     </header>
   );
