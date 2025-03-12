@@ -5,31 +5,31 @@ import { MessageSquare, Camera, Heart, Users } from "lucide-react";
 export default function ProfileStats() {
   const stats = [
     {
-      label: "Posts",
+      label: "Bài viết",
       value: "248",
       icon: <MessageSquare className="h-5 w-5" />,
       href: "#",
     },
     {
-      label: "Photos",
+      label: "Ảnh",
       value: "1.2K",
       icon: <Camera className="h-5 w-5" />,
       href: "#",
     },
     {
-      label: "Likes",
+      label: "Lượt thích",
       value: "36.5K",
       icon: <Heart className="h-5 w-5" />,
       href: "#",
     },
     {
-      label: "Followers",
+      label: "Người theo dõi",
       value: "128K",
       icon: <Users className="h-5 w-5" />,
       href: "#",
     },
     {
-      label: "Following",
+      label: "Đang theo dõi",
       value: "420",
       icon: <Users className="h-5 w-5" />,
       href: "#",

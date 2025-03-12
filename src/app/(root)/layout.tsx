@@ -4,7 +4,7 @@ import SidebarContent from "@/components/layout/sidebar-content";
 import { ReactNode } from "react";
 
 export default function DefaultLayout({ children }: { children: ReactNode }) {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Left Sidebar - Desktop */}

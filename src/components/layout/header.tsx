@@ -7,6 +7,7 @@ import SearchButton from "./search-button";
 import { Dancing_Script } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const dancingScript = Dancing_Script({
   weight: ["700"],
@@ -52,8 +53,12 @@ export default function Header() {
           </div>
         ) : (
           <div className="flex items-center space-x-3">
-            <Button>Đăng Nhập</Button>
-            <Button variant="outline">Đăng Ký</Button>
+            <Button>
+              <Link href="/auth/login">Đăng Nhập</Link>
+            </Button>
+            <Button variant="outline">
+              <Link href="/auth/register">Đăng Ký</Link>
+            </Button>
           </div>
         )}
       </div>

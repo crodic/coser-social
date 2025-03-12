@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function ProfilePage() {
   return (
     <>
-      <main className="flex flex-1 overflow-hidden pb-4">
+      <main className="mx-auto flex w-full max-w-7xl flex-1 overflow-hidden pb-4">
         <div className="flex-1 overflow-y-auto p-4">
           <div className="bg-background flex flex-1 flex-col overflow-hidden">
             {/* Cover Photo */}
@@ -78,9 +78,9 @@ export default function ProfilePage() {
                   <div className="mt-4 flex gap-2">
                     <Button variant="destructive">
                       <Lock />
-                      Block
+                      Chặn người dùng
                     </Button>
-                    <Button>Follow</Button>
+                    <Button>Theo dõi</Button>
                     <Button variant="ghost" size="icon">
                       <Share2 className="h-4 w-4" />
                     </Button>
