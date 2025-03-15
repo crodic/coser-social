@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import NextAuth, { NextAuthConfig, User } from "next-auth";
+import NextAuth, { User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { signIn as login, refreshTokenApi } from "@/services/apis/auth";
 import { XiorError } from "xior";
 import { jwtDecode } from "jwt-decode";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
-  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -48,13 +47,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
+    //! Valid when using `export { auth as middleware } from "@/auth"`
     authorized({ request: { nextUrl }, auth }) {
       const isLoggedIn = !!auth?.user;
       const { pathname } = nextUrl;
       if ((pathname.startsWith("/auth/login") || pathname.startsWith("/auth/register")) && isLoggedIn) {
         return Response.redirect(new URL("/", nextUrl));
       }
-      console.log(!!auth);
       return !!auth;
     },
     jwt: async ({ user, token, trigger, session }) => {
@@ -114,4 +113,4 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: {
     signIn: "/auth/login",
   },
-} satisfies NextAuthConfig);
+});
