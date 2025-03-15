@@ -3,10 +3,9 @@ import NextAuth, { DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 declare module "next-auth" {
-  //? return session on session callback and getSession
+  //? return session on session callback and getSession & useSession
   interface Session {
     user: {
-      id: number;
       accessToken: string;
       refreshToken: string;
       role: "USER" | "SUPER ADMIN" | "EVENT PLANNER";
@@ -16,8 +15,6 @@ declare module "next-auth" {
 
   //? return user on authorized function
   interface User {
-    id: number;
-    username: string;
     accessToken: string;
     refreshToken: string;
     role: "USER" | "SUPER ADMIN" | "EVENT PLANNER";
@@ -29,7 +26,9 @@ declare module "next-auth/jwt" {
   interface JWT {
     accessToken: string;
     refreshToken: string;
-    id?: string | number;
+    id: string;
+    email: string | undefined | null;
+    name: string | undefined | null;
     role: "USER" | "SUPER ADMIN" | "EVENT PLANNER";
     error?: string;
   }

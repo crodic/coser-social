@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthConfig, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { loginSchema } from "./validations/auth.schema";
-import { signIn as login } from "@/services/apis/auth";
+import { signIn as login, refreshTokenApi } from "@/services/apis/auth";
 import { XiorError } from "xior";
+import { jwtDecode } from "jwt-decode";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -15,9 +16,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       },
       authorize: async (credentials) => {
         credentials.rememberMe = Boolean(credentials.rememberMe);
-        const values = loginSchema.safeParse(credentials);
-        if (!values.success) throw new Error("Invalid credentials");
-        const { email, password, rememberMe } = values.data;
+        const email = credentials.email as string;
+        const password = credentials.password as string;
+        const rememberMe = credentials.rememberMe as boolean;
 
         try {
           const res = await login({ email, password, rememberMe });
@@ -26,10 +27,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             payload,
           } = res;
 
-          const userJwt = {
+          const userJwt: User = {
             id: payload._id,
-            username: payload.username,
+            email: payload.email,
+            name: payload.displayName,
             role: payload.role,
+            image: payload.avatar,
             accessToken,
             refreshToken,
           };
@@ -45,10 +48,70 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   callbacks: {
-    authorized: ({ auth }) => !!auth,
-    jwt: ({ token, user }) => ({ ...token, ...user }),
+    authorized({ request: { nextUrl }, auth }) {
+      const isLoggedIn = !!auth?.user;
+      const { pathname } = nextUrl;
+      if ((pathname.startsWith("/auth/login") || pathname.startsWith("/auth/register")) && isLoggedIn) {
+        return Response.redirect(new URL("/", nextUrl));
+      }
+      console.log(!!auth);
+      return !!auth;
+    },
+    jwt: async ({ user, token, trigger, session }) => {
+      if (trigger === "update") {
+        return {
+          ...token,
+          ...session,
+        };
+      }
+
+      if (user) {
+        token.id = user.id as string;
+        token.email = user.email;
+        token.name = user.name;
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+        token.role = user.role;
+        return token;
+      } else if (Date.now() < (jwtDecode(token.accessToken).exp as number) * 1000) {
+        return token;
+      } else {
+        if (!token.refreshToken) {
+          throw new Error("Missing Token");
+        }
+
+        try {
+          const res = await refreshTokenApi(token.refreshToken);
+          return {
+            ...token,
+            accessToken: res.accessToken,
+            refreshToken: res.refreshToken,
+          };
+        } catch (error) {
+          if (error instanceof XiorError) {
+            token.error = error.response?.data.message || "Session expired. Please login again.";
+          }
+          if (error instanceof Error) {
+            token.error = error.message || "Session expired. Please login again.";
+          }
+          return token;
+        }
+      }
+    },
+    session: async (params) => {
+      const { token, session } = params;
+
+      session.userId = token.id;
+      session.user.id = token.id;
+      session.user.accessToken = token.accessToken;
+      session.user.refreshToken = token.refreshToken;
+      session.user.role = token.role;
+      session.user.error = token.error;
+
+      return Promise.resolve(session);
+    },
   },
   pages: {
     signIn: "/auth/login",
   },
-});
+} satisfies NextAuthConfig);

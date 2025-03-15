@@ -11,11 +11,19 @@ interface LoginResType {
   payload: UserLoginResType;
 }
 
+interface RefreshTokenResType {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export const signIn = async (values: LoginSchemaType) => {
   const res = await http.post<LoginResType>("/auth/login", values);
   return res.data;
 };
 export const signUp = async () => {};
 export const logout = async () => {};
-export const refreshTokenApi = async () => {};
+export const refreshTokenApi = async (token: string) => {
+  const res = await http.post<RefreshTokenResType>("/auth/refresh-token", { token });
+  return res.data;
+};
 export const verifyAccount = async () => {};
