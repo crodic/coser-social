@@ -23,6 +23,7 @@ export const signIn = async (values: LoginSchemaType) => {
 export const signUp = async () => {};
 export const logout = async () => {};
 export const refreshTokenApi = async (token: string) => {
+  console.log(">>> Refresh token: ", token);
   const res = await http.post<RefreshTokenResType>("/auth/refresh-token", { token });
   return res.data;
 };

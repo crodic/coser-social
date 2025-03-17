@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import Providers from "@/components/providers";
+import CheckAuthToken from "@/components/check-auth-token";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -54,7 +56,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${segoeUi.variable} font-[family-name:var(--font-segoe-ui)] antialiased`}
       >
-        {children}
+        <Providers>
+          <CheckAuthToken />
+          {children}
+        </Providers>
       </body>
     </html>
   );

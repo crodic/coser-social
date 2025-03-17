@@ -12,7 +12,6 @@ export const loginAction = async (values: LoginSchemaType) => {
       message: "LoginSuccess",
     };
   } catch (error) {
-    console.log(error instanceof AuthError);
     if (error instanceof AuthError) {
       console.log("Error Message: ", error.cause?.err?.message);
       return {

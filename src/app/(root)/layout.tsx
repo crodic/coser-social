@@ -1,14 +1,15 @@
+import { auth } from "@/auth";
 import Header from "@/components/layout/header";
 import SearchList from "@/components/layout/search-list";
 import SidebarContent from "@/components/layout/sidebar-content";
 import { ReactNode } from "react";
 
-export default function DefaultLayout({ children }: { children: ReactNode }) {
-  const isLoggedIn = true;
+export default async function DefaultLayout({ children }: { children: ReactNode }) {
+  const session = await auth();
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Left Sidebar - Desktop */}
-      {isLoggedIn && (
+      {session?.user && (
         <div className="hidden w-64 flex-col overflow-y-auto border-r border-gray-200 bg-white md:flex">
           <SidebarContent />
         </div>
