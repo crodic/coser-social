@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import Providers from "@/components/providers";
 import CheckAuthToken from "@/components/check-auth-token";
+import { SessionProvider } from "next-auth/react";
+import { auth } from "@/auth";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -46,20 +47,21 @@ export const metadata: Metadata = {
   title: "COSER Website",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${segoeUi.variable} font-[family-name:var(--font-segoe-ui)] antialiased`}
       >
-        <Providers>
+        <SessionProvider session={session}>
           <CheckAuthToken />
           {children}
-        </Providers>
+        </SessionProvider>
       </body>
     </html>
   );

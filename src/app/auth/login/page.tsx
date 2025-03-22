@@ -11,11 +11,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginSchemaType } from "@/validations/auth.schema";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { loginAction } from "./actions";
-import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
-  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -26,12 +24,10 @@ export default function LoginPage() {
   });
 
   const handleSubmit = async (values: LoginSchemaType) => {
-    const result = await loginAction(values);
+    const result = await signIn("credentials", { ...values, redirect: true, redirectTo: "/" });
     if (result?.error) {
-      form.setError("root", { message: result.message });
-      return;
+      form.setError("root", { message: result.error });
     }
-    router.push("/");
   };
 
   return (

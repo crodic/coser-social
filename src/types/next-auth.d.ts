@@ -9,8 +9,8 @@ declare module "next-auth" {
       accessToken: string;
       refreshToken: string;
       role: "USER" | "SUPER ADMIN" | "EVENT PLANNER";
-      error?: string;
     };
+    error?: "RefreshTokenError";
   }
 
   //? return user on authorized function
@@ -30,6 +30,6 @@ declare module "next-auth/jwt" {
     email: string | undefined | null;
     name: string | undefined | null;
     role: "USER" | "SUPER ADMIN" | "EVENT PLANNER";
-    error?: string;
+    error?: "RefreshTokenError";
   }
 }

@@ -9,8 +9,6 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth;
   const { pathname } = req.nextUrl;
 
-  console.log("Middleware:", req.url);
-
   if (isPublicRoute.includes(pathname) || pathname.startsWith("/profile")) {
     return NextResponse.next();
   }

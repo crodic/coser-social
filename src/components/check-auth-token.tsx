@@ -10,12 +10,10 @@ export default function CheckAuthToken() {
   const router = useRouter();
   useEffect(() => {
     const handleCheckToken = async () => {
-      if (session?.user.error) {
+      console.log(">>> CALL HANDLE CHECK TOKEN", session?.error);
+      if (session?.error) {
         await signOut({ redirect: false });
-        const message = encodeURIComponent(
-          session?.user.error.includes("refresh token") ? "Vui lòng đăng nhập." : "Invalid token.",
-        );
-        router.push(`/auth/login?msg=${message}&callbackUrl=${pathname}`);
+        router.push(`/auth/login?callbackUrl=${pathname}`);
       }
     };
 

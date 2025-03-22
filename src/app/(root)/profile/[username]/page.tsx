@@ -12,12 +12,32 @@ import ProfileStats from "./_components/profile-stats";
 import { posts } from "@/mocks/posts";
 import { Post } from "@/components/post";
 import { Metadata } from "next";
+import xior, { XiorError } from "xior";
+import { cookies } from "next/headers";
+import { signIn } from "@/auth";
 
 export const metadata: Metadata = {
   title: "Profile | Sakura",
 };
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const cookie = await cookies();
+  const user = await xior
+    .get(`${process.env.NEXT_PUBLIC_API_URL}/users/me`, {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${cookie.get("accessToken")?.value}`,
+      },
+    })
+    .catch(async (err) => {
+      console.log(err);
+      if (err instanceof XiorError) {
+        console.log("Server SignOut");
+        await signIn();
+      }
+    });
+  console.log(">>> USER", user);
   return (
     <>
       <main className="mx-auto flex w-full max-w-7xl flex-1 overflow-hidden pb-4">

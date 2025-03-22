@@ -101,13 +101,10 @@ export const authConfig = {
             accessToken: data.accessToken,
             refreshToken: data.refreshToken,
           };
-        } catch (error) {
-          if (error instanceof XiorError) {
-            token.error = error.response?.data.message || "Session expired. Please login again.";
-          }
-          if (error instanceof Error && !token.error) {
-            token.error = error.message || "Session expired. Please login again.";
-          }
+        } catch (error: any) {
+          console.log(error.response?.data.message);
+          token.error = "RefreshTokenError";
+          console.log("Error: ", token.error);
           return token;
         }
       }
@@ -120,7 +117,7 @@ export const authConfig = {
       session.user.accessToken = token.accessToken;
       session.user.refreshToken = token.refreshToken;
       session.user.role = token.role;
-      session.user.error = token.error;
+      session.error = token.error;
 
       return Promise.resolve(session);
     },

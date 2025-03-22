@@ -20,11 +20,17 @@ export const signIn = async (values: LoginSchemaType) => {
   const res = await http.post<LoginResType>("/auth/login", values);
   return res.data;
 };
+
 export const signUp = async () => {};
-export const logout = async () => {};
+
+export const signOut = async () => {
+  const res = await http.post("/auth/logout");
+  return res.data;
+};
+
 export const refreshTokenApi = async (token: string) => {
-  console.log(">>> Refresh token: ", token);
   const res = await http.post<RefreshTokenResType>("/auth/refresh-token", { token });
   return res.data;
 };
+
 export const verifyAccount = async () => {};

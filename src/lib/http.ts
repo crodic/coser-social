@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import xior from "xior";
 
 export const http = xior.create({
@@ -16,4 +16,14 @@ http.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error),
+);
+
+http.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    if (error.response?.status === 401) {
+      await signOut({ redirect: true, redirectTo: "/auth/login" });
+    }
+    return Promise.reject(error);
+  },
 );
